@@ -664,6 +664,9 @@ a {
 .schedule-row span:last-child {
   color: var(--ink);
   text-align: right;
+  display: grid;
+  gap: 0.15rem;
+  justify-items: end;
 }
 
 .schedule-row.is-closed span:last-child {
