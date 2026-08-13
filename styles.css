@@ -35,17 +35,6 @@ body {
   background: #f7fcfd;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: url("assets/logo-bg.png") no-repeat right 8% center;
-  background-size: min(52vw, 620px);
-  opacity: 0.07;
-}
-
 main {
   position: relative;
   z-index: 1;
@@ -120,10 +109,25 @@ a {
   min-width: 0;
 }
 
-.brand-logo {
-  width: auto;
-  height: 64px;
-  object-fit: contain;
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+  font-size: 1.05rem;
+}
+
+.brand-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .nav {
@@ -250,18 +254,6 @@ a {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(78, 196, 234, 0.18), transparent 68%);
   pointer-events: none;
-}
-
-.hero-logo-bg {
-  position: absolute;
-  left: 1%;
-  top: 16%;
-  width: min(48vw, 540px);
-  height: auto;
-  opacity: 0.18;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
 }
 
 .hero-inner {
@@ -1031,20 +1023,6 @@ a {
     max-width: 16ch;
   }
 
-  .hero-logo-bg {
-    left: 50%;
-    top: 12%;
-    width: min(78vw, 340px);
-    transform: translateX(-50%);
-    opacity: 0.1;
-  }
-
-  body::before {
-    background-position: center 78%;
-    background-size: min(88vw, 400px);
-    opacity: 0.05;
-  }
-
   .rdv-grid {
     grid-template-columns: 1fr;
   }
@@ -1121,10 +1099,6 @@ a {
 
   .hero-meta li:not(:last-child)::after {
     display: none;
-  }
-
-  .brand-logo {
-    height: 56px;
   }
 
   .schedule-row {
