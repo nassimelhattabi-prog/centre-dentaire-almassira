@@ -1,17 +1,16 @@
 # Centre Dentaire ALMASSIRA
 
-Site vitrine pour le **Centre Dentaire ALMASSIRA** — Dr Oussama Almohammadi (Casablanca).
+Site vitrine + **base de données de réservation** (SQLite).
 
-## Lancer en local
-
-Ouvrir `index.html` dans le navigateur, ou servir le dossier :
+## Lancer (site + réservations)
 
 ```bash
-npx --yes serve centre-dentaire-almassira
+cd centre-dentaire-almassira
+npm start
 ```
 
-## Contenu
+- Site : http://localhost:5180
+- Admin : http://localhost:5180/admin.html
+- Clé admin par défaut : `almassira2026`
 
-- Adresse : 147 Av. du 6 Novembre 1975, Casablanca
-- Téléphone : 0522 56 34 68
-- Horaires : lun–jeu 09:00–13:00 / 15:00–19:30 · ven 09:00–13:00
+Les rendez-vous sont enregistrés dans `data/reservations.db`.

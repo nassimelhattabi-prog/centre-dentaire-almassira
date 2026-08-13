@@ -1,0 +1,9 @@
+{
+  "name": "centre-dentaire-almassira",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Site vitrine et réservations — Centre Dentaire ALMASSIRA",
+  "scripts": {
+    "start": "node --experimental-sqlite server.js"
+  }
+}

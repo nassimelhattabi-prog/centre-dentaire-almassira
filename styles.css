@@ -35,6 +35,22 @@ body {
   background: #f7fcfd;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("assets/logo-bg.png") no-repeat right 8% center;
+  background-size: min(52vw, 620px);
+  opacity: 0.07;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -234,6 +250,18 @@ a {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(78, 196, 234, 0.18), transparent 68%);
   pointer-events: none;
+}
+
+.hero-logo-bg {
+  position: absolute;
+  left: 1%;
+  top: 16%;
+  width: min(48vw, 540px);
+  height: auto;
+  opacity: 0.18;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
 }
 
 .hero-inner {
@@ -665,6 +693,157 @@ a {
   color: var(--muted);
 }
 
+/* ——— Reservation ——— */
+.reservation {
+  background: linear-gradient(180deg, #ffffff, #f4fbfd);
+}
+
+.rdv-form {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.rdv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.rdv-form label {
+  display: grid;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.rdv-form label span {
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.rdv-form input,
+.rdv-form select,
+.rdv-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  color: var(--ink);
+  background: #fbfefe;
+}
+
+.rdv-form input:focus,
+.rdv-form select:focus,
+.rdv-form textarea:focus {
+  outline: 2px solid rgba(0, 181, 166, 0.35);
+  border-color: var(--teal);
+}
+
+.rdv-form textarea,
+.rdv-form > label:last-of-type {
+  margin-top: 1rem;
+}
+
+.rdv-form .btn {
+  margin-top: 1.25rem;
+}
+
+.rdv-status {
+  margin: 1rem 0 0;
+  color: #b42318;
+  font-weight: 600;
+}
+
+.rdv-status.is-ok {
+  color: var(--teal);
+}
+
+.admin-body {
+  min-height: 100vh;
+  background: #f7fcfd;
+}
+
+.admin-wrap {
+  width: min(1100px, calc(100% - 2rem));
+  margin: 2rem auto 4rem;
+}
+
+.admin-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-head img {
+  width: 64px;
+  height: auto;
+}
+
+.admin-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--navy);
+}
+
+.admin-head p {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+}
+
+.admin-login {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 360px;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.admin-table button {
+  margin: 0 0.25rem 0.25rem 0;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+  font-family: var(--font-display);
+  background: var(--teal-soft);
+  color: var(--navy);
+}
+
+.statut {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.statut-en_attente { color: #b45309; }
+.statut-confirmee { color: var(--teal); }
+.statut-annulee { color: var(--muted); }
+
 /* ——— Contact ——— */
 .contact-layout {
   display: grid;
@@ -850,6 +1029,24 @@ a {
 
   .hero h1 {
     max-width: 16ch;
+  }
+
+  .hero-logo-bg {
+    left: 50%;
+    top: 12%;
+    width: min(78vw, 340px);
+    transform: translateX(-50%);
+    opacity: 0.1;
+  }
+
+  body::before {
+    background-position: center 78%;
+    background-size: min(88vw, 400px);
+    opacity: 0.05;
+  }
+
+  .rdv-grid {
+    grid-template-columns: 1fr;
   }
 
   .horaires-grid,

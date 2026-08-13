@@ -24,6 +24,7 @@
         <a href="#cabinet">Cabinet</a>
         <a href="#soins">Soins</a>
         <a href="#horaires">Horaires</a>
+        <a href="#reservation">Rendez-vous</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -39,6 +40,7 @@
       <a href="#cabinet">Cabinet</a>
       <a href="#soins">Soins</a>
       <a href="#horaires">Horaires</a>
+      <a href="#reservation">Rendez-vous</a>
       <a href="#contact">Contact</a>
       <a class="menu-phone" href="tel:+212522563468">Appeler — 0522 56 34 68</a>
     </div>
@@ -46,6 +48,7 @@
 
   <main id="contenu">
     <section class="hero" id="accueil">
+      <img class="hero-logo-bg" src="assets/logo-bg.png" alt="" aria-hidden="true" />
       <div class="hero-inner">
         <div class="hero-copy">
           <p class="hero-kicker">Centre Dentaire ALMASSIRA · Casablanca</p>
@@ -54,7 +57,7 @@
             Le Dr Oussama Almohammadi vous accueille à Al Massira pour des soins dentaires précis, humains et modernes.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="tel:+212522563468">Prendre rendez-vous</a>
+            <a class="btn btn-primary" href="#reservation">Prendre rendez-vous</a>
             <a class="btn btn-outline" href="#cabinet">Découvrir le cabinet</a>
           </div>
           <ul class="hero-meta">
@@ -204,6 +207,60 @@
             <span role="cell">Fermé</span>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section reservation" id="reservation">
+      <div class="section-inner reservation-layout">
+        <header class="section-head">
+          <h2>Réserver un rendez-vous</h2>
+          <p>Choisissez un créneau. Votre demande est enregistrée dans la base du cabinet.</p>
+        </header>
+
+        <form class="rdv-form" data-rdv-form>
+          <div class="rdv-grid">
+            <label>
+              Nom et prénom
+              <input type="text" name="nom" autocomplete="name" required />
+            </label>
+            <label>
+              Téléphone
+              <input type="tel" name="telephone" autocomplete="tel" inputmode="tel" required />
+            </label>
+            <label>
+              E-mail <span>(optionnel)</span>
+              <input type="email" name="email" autocomplete="email" />
+            </label>
+            <label>
+              Soin souhaité
+              <select name="soin" required>
+                <option value="">Choisir</option>
+                <option>Consultation & diagnostic</option>
+                <option>Détartrage</option>
+                <option>Soins conservateurs</option>
+                <option>Esthétique du sourire</option>
+                <option>Prothèses & implants</option>
+                <option>Autre</option>
+              </select>
+            </label>
+            <label>
+              Date
+              <input type="date" name="date" required data-rdv-date />
+            </label>
+            <label>
+              Heure
+              <select name="heure" required data-rdv-heure>
+                <option value="">Choisir une date d’abord</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Message <span>(optionnel)</span>
+            <textarea name="message" rows="3" placeholder="Précisez un besoin ou une urgence"></textarea>
+          </label>
+          <p class="rdv-status" data-rdv-status hidden></p>
+          <button class="btn btn-primary" type="submit">Envoyer la demande</button>
+        </form>
       </div>
     </section>
 

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Réservations — Centre Dentaire ALMASSIRA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+</head>
+<body class="admin-body">
+  <main class="admin-wrap">
+    <header class="admin-head">
+      <a href="index.html"><img src="assets/logo.png" alt="ALMASSIRA" width="72" height="74" /></a>
+      <div>
+        <h1>Réservations</h1>
+        <p>Base de données du cabinet</p>
+      </div>
+    </header>
+
+    <form class="admin-login" data-admin-login>
+      <label>
+        Clé admin
+        <input type="password" name="key" required />
+      </label>
+      <button class="btn btn-primary" type="submit">Ouvrir</button>
+      <p class="rdv-status" data-admin-status hidden></p>
+    </form>
+
+    <section class="admin-board" data-admin-board hidden>
+      <p class="admin-count" data-admin-count></p>
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Patient</th>
+              <th>Téléphone</th>
+              <th>Soin</th>
+              <th>Statut</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody data-admin-rows></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>

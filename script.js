@@ -85,4 +85,69 @@
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") closeLightbox();
   });
+
+  const SLOTS = {
+    1: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"],
+    2: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"],
+    3: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"],
+    4: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"],
+    5: ["09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"],
+  };
+
+  const form = document.querySelector("[data-rdv-form]");
+  const dateInput = document.querySelector("[data-rdv-date]");
+  const hourSelect = document.querySelector("[data-rdv-heure]");
+  const formStatus = document.querySelector("[data-rdv-status]");
+
+  const setStatus = (text, ok = false) => {
+    if (!formStatus) return;
+    formStatus.hidden = !text;
+    formStatus.textContent = text;
+    formStatus.classList.toggle("is-ok", ok);
+  };
+
+  const fillHours = (slots) => {
+    if (!hourSelect) return;
+    hourSelect.innerHTML = slots.length
+      ? `<option value="">Choisir</option>${slots.map((h) => `<option value="${h}">${h}</option>`).join("")}`
+      : `<option value="">Aucun créneau ce jour</option>`;
+  };
+
+  if (dateInput) {
+    const today = new Date().toISOString().slice(0, 10);
+    dateInput.min = today;
+  }
+
+  dateInput?.addEventListener("change", async () => {
+    const date = dateInput.value;
+    const fallback = SLOTS[new Date(`${date}T12:00:00`).getDay()] || [];
+    try {
+      const res = await fetch(`/api/slots?date=${encodeURIComponent(date)}`);
+      if (!res.ok) throw new Error("offline");
+      const data = await res.json();
+      fillHours(data.slots || fallback);
+    } catch {
+      fillHours(fallback);
+    }
+  });
+
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    setStatus("");
+    const payload = Object.fromEntries(new FormData(form).entries());
+    try {
+      const res = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Impossible d’enregistrer.");
+      form.reset();
+      fillHours([]);
+      setStatus("Demande enregistrée. Le cabinet vous confirmera le rendez-vous.", true);
+    } catch (error) {
+      setStatus(error.message || "Le serveur de réservation n’est pas lancé.");
+    }
+  });
 })();
