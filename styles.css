@@ -109,25 +109,10 @@ a {
   min-width: 0;
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.brand-name {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  color: var(--navy);
-  font-size: 1.05rem;
-}
-
-.brand-sub {
-  font-size: 0.72rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.brand-logo {
+  width: auto;
+  height: 68px;
+  object-fit: contain;
 }
 
 .nav {
@@ -1099,6 +1084,10 @@ a {
 
   .hero-meta li:not(:last-child)::after {
     display: none;
+  }
+
+  .brand-logo {
+    height: 56px;
   }
 
   .schedule-row {
