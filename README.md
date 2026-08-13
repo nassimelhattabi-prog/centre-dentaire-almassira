@@ -14,3 +14,5 @@ npm start
 - Clé admin par défaut : `almassira2026`
 
 Les rendez-vous sont enregistrés dans `data/reservations.db`.
+
+Horaires : lun–ven 09:00–13:00 / 15:00–19:30 · sam 09:00–14:30 · dim fermé.
