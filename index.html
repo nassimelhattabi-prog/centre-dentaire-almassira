@@ -217,7 +217,7 @@
           <p>Choisissez un créneau. Votre demande est enregistrée dans la base du cabinet.</p>
         </header>
 
-        <form class="rdv-form" data-rdv-form>
+        <form class="rdv-form" data-rdv-form novalidate>
           <div class="rdv-grid">
             <label>
               Nom et prénom
@@ -225,11 +225,11 @@
             </label>
             <label>
               Téléphone
-              <input type="tel" name="telephone" autocomplete="tel" inputmode="tel" required />
+              <input type="text" name="telephone" autocomplete="tel" inputmode="tel" required />
             </label>
             <label>
               E-mail <span>(optionnel)</span>
-              <input type="email" name="email" autocomplete="email" />
+              <input type="text" name="email" autocomplete="email" inputmode="email" />
             </label>
             <label>
               Soin souhaité

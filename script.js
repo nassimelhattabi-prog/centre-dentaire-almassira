@@ -106,6 +106,32 @@
     formStatus.classList.toggle("is-ok", ok);
   };
 
+  const MONTHS = {
+    janvier: "01", jan: "01",
+    février: "02", fevrier: "02", fév: "02", fev: "02",
+    mars: "03",
+    avril: "04", avr: "04",
+    mai: "05",
+    juin: "06",
+    juillet: "07", juil: "07",
+    août: "08", aout: "08",
+    septembre: "09", sept: "09",
+    octobre: "10", oct: "10",
+    novembre: "11", nov: "11",
+    décembre: "12", decembre: "12", déc: "12", dec: "12",
+  };
+
+  const toIsoDate = (value) => {
+    const raw = String(value || "").trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+    const fr = raw.toLowerCase().match(/^(\d{1,2})\s+([a-zéû.]+)\s+(\d{4})$/i);
+    if (fr) {
+      const month = MONTHS[fr[2].replace(".", "")];
+      if (month) return `${fr[3]}-${month}-${fr[1].padStart(2, "0")}`;
+    }
+    return "";
+  };
+
   const fillHours = (slots) => {
     if (!hourSelect) return;
     hourSelect.innerHTML = slots.length
@@ -115,12 +141,13 @@
 
   if (dateInput) {
     const today = new Date().toISOString().slice(0, 10);
-    dateInput.min = today;
+    dateInput.setAttribute("min", today);
   }
 
-  dateInput?.addEventListener("change", async () => {
-    const date = dateInput.value;
-    const fallback = SLOTS[new Date(`${date}T12:00:00`).getDay()] || [];
+  const loadSlots = async (value) => {
+    const date = toIsoDate(value) || value;
+    const day = new Date(`${date}T12:00:00`).getDay();
+    const fallback = SLOTS[day] || [];
     try {
       const res = await fetch(`/api/slots?date=${encodeURIComponent(date)}`);
       if (!res.ok) throw new Error("offline");
@@ -129,25 +156,51 @@
     } catch {
       fillHours(fallback);
     }
-  });
+  };
+
+  dateInput?.addEventListener("change", () => loadSlots(dateInput.value));
 
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("");
     const payload = Object.fromEntries(new FormData(form).entries());
+    payload.date = toIsoDate(payload.date) || payload.date;
+
+    if (!payload.nom?.trim() || !payload.telephone?.trim()) {
+      setStatus("Indiquez votre nom et votre téléphone.");
+      return;
+    }
+    if (!payload.soin || !payload.heure) {
+      setStatus("Choisissez un soin, une date et une heure.");
+      return;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(payload.date)) {
+      setStatus("La date n’est pas valide. Utilisez le calendrier du champ date.");
+      return;
+    }
+
     try {
       const res = await fetch("/api/reservations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Impossible d’enregistrer.");
+      const text = await res.text();
+      let data = {};
+      try { data = JSON.parse(text); } catch { /* page HTML si l’API n’est pas là */ }
+      if (!res.ok) {
+        throw new Error(data.error || "Le serveur de réservation n’est pas disponible. Appelez le 0522 56 34 68.");
+      }
       form.reset();
       fillHours([]);
       setStatus("Demande enregistrée. Le cabinet vous confirmera le rendez-vous.", true);
     } catch (error) {
-      setStatus(error.message || "Le serveur de réservation n’est pas lancé.");
+      const msg = error?.message || "";
+      if (/pattern|match|fetch|Failed/i.test(msg)) {
+        setStatus("Le serveur de réservation n’est pas disponible. Appelez le 0522 56 34 68.");
+        return;
+      }
+      setStatus(msg || "Impossible d’envoyer la demande. Appelez le 0522 56 34 68.");
     }
   });
 })();
